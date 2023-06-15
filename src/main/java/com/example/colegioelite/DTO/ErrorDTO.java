@@ -1,6 +1,6 @@
 package com.example.colegioelite.DTO;
 
-public class ErrorDTO {
+public class ErrorDTO extends EstudianteDTO {
     private String error;
 
 

@@ -26,9 +26,10 @@ public class ControladorEstudiante {
             return new ResponseEntity<>(estudianteRegistrado,HttpStatus.CREATED);
         }catch(Exception error){
             ErrorDTO errorDTO= new ErrorDTO();
+            errorDTO.setError(error.getMessage());
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+                    .body(errorDTO);
         }
     }
 

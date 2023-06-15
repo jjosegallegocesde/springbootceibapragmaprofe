@@ -27,9 +27,6 @@ public class Estudiante {
     @JsonBackReference
     private Acudiente acudiente;
 
-    @Transient
-    private String mensajeError;
-
 
     public Estudiante() {
     }
@@ -82,11 +79,4 @@ public class Estudiante {
         this.acudiente = acudiente;
     }
 
-    public String getMensajeError() {
-        return mensajeError;
-    }
-
-    public void setMensajeError(String mensajeError) {
-        this.mensajeError = mensajeError;
-    }
 }

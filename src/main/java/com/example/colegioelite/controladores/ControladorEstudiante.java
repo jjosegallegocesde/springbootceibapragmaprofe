@@ -1,5 +1,6 @@
 package com.example.colegioelite.controladores;
 
+import com.example.colegioelite.DTO.ErrorDTO;
 import com.example.colegioelite.DTO.EstudianteDTO;
 import com.example.colegioelite.entidades.Estudiante;
 import com.example.colegioelite.servicios.EstudianteServicio;
@@ -22,15 +23,12 @@ public class ControladorEstudiante {
     public ResponseEntity<EstudianteDTO> registrar(@RequestBody Estudiante datosEstudiante){
         try{
             EstudianteDTO estudianteRegistrado= estudianteServicio.registrar(datosEstudiante);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(estudianteRegistrado);
+            return new ResponseEntity<>(estudianteRegistrado,HttpStatus.CREATED);
         }catch(Exception error){
-
+            ErrorDTO errorDTO= new ErrorDTO();
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(null);
-
         }
     }
 

@@ -6,6 +6,7 @@ import com.example.colegioelite.entidades.Estudiante;
 import com.example.colegioelite.entidades.Materia;
 import com.example.colegioelite.mapas.EstudianteMapa;
 import com.example.colegioelite.repositorios.EstudianteRepositorio;
+import com.example.colegioelite.validadores.EstudianteValidaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,15 @@ import java.util.Optional;
 
 
 @Service
-public class EstudianteServicio implements ServicioBaseDTO<Estudiante,EstudianteDTO> {
+public class EstudianteServicio implements ServicioBaseDTO<Estudiante,EstudianteDTO>  {
 
     @Autowired
     private EstudianteRepositorio estudianteRepositorio;
     @Autowired
     private EstudianteMapa estudianteMapa;
 
+    @Autowired
+    private EstudianteValidaciones validaciones;
 
     @Override
     public List<EstudianteDTO> buscarTodos() throws Exception {
@@ -42,8 +45,12 @@ public class EstudianteServicio implements ServicioBaseDTO<Estudiante,Estudiante
     @Override
     public EstudianteDTO registrar(Estudiante datosARegistrar) throws Exception {
         try{
-            EstudianteDTO estudianteGuardado= estudianteMapa.mapearEstudiante(estudianteRepositorio.save(datosARegistrar));
-            return estudianteGuardado;
+            if(validaciones.verificarCorreo(datosARegistrar.getCorreo())){
+                throw new Exception("revise el email por favor");
+            }else{
+                EstudianteDTO estudianteGuardado= estudianteMapa.mapearEstudiante(estudianteRepositorio.save(datosARegistrar));
+                return estudianteGuardado;
+            }
         }catch(Exception error){
             throw new Exception(error.getMessage());
         }

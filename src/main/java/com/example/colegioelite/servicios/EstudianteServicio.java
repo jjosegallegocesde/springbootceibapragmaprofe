@@ -39,7 +39,16 @@ public class EstudianteServicio implements ServicioBaseDTO<Estudiante,Estudiante
 
     @Override
     public EstudianteDTO buscarPorId(Integer id) throws Exception {
-        return null;
+        try{
+          Optional<Estudiante>estudianteOpcional=estudianteRepositorio.findById(id);
+            if(estudianteOpcional.isPresent()){
+                return  estudianteMapa.mapearEstudiante(estudianteOpcional.get());
+            }else{
+                throw new Exception("Usuario no encontrado");
+            }
+        }catch(Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
     @Override
